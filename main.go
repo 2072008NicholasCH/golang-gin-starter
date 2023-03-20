@@ -8,6 +8,7 @@ import (
 	authBuilder "gin-starter/modules/auth/v1/builder"
 	masterBuilder "gin-starter/modules/master/v1/builder"
 	notificationBuilder "gin-starter/modules/notification/v1/builder"
+	paymentBuilder "gin-starter/modules/payment/v1/builder"
 	userBuilder "gin-starter/modules/user/v1/builder"
 	pubsubSDK "gin-starter/sdk/pubsub"
 	"gin-starter/utils"
@@ -122,6 +123,7 @@ func BuildHandler(cfg config.Config, router *gin.Engine, db *gorm.DB, redisPool 
 	userBuilder.BuildUserHandler(cfg, router, db, redisPool, awsSession)
 	notificationBuilder.BuildNotificationHandler(cfg, router, db, redisPool, awsSession)
 	masterBuilder.BuildMasterHandler(cfg, router, db, redisPool, awsSession)
+	paymentBuilder.BuildPaymentHandler(cfg, router, db, redisPool, awsSession)
 }
 
 func checkError(err error) {

@@ -1,8 +1,10 @@
 package builder
 
 import (
+	"gin-starter/app"
 	"gin-starter/config"
-	"gin-starter/modules/auth/v1/service"
+	paymentRepo "gin-starter/modules/payment/v1/repository"
+	"gin-starter/modules/payment/v1/service"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/gin-gonic/gin"
@@ -15,7 +17,7 @@ import (
 func BuildPaymentHandler(cfg config.Config, router *gin.Engine, db *gorm.DB, redisPool *redis.Pool, awsSession *session.Session) {
 	pr := paymentRepo.NewPaymentRepository(db)
 
-	pf := service.NewPaymentFinderService(cfg, pr)
+	pf := service.NewPaymentFinder(cfg, pr)
 
-	app.PaymentHandler(cfg, router, pf)
+	app.PaymentFinderHTTPHandler(cfg, router, pf)
 }

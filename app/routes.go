@@ -10,6 +10,8 @@ import (
 	masterservicev1 "gin-starter/modules/master/v1/service"
 	notificationhandlerv1 "gin-starter/modules/notification/v1/handler"
 	notificationservicev1 "gin-starter/modules/notification/v1/service"
+	paymenthandlerv1 "gin-starter/modules/payment/v1/handler"
+	paymentservicev1 "gin-starter/modules/payment/v1/service"
 	userhandlerv1 "gin-starter/modules/user/v1/handler"
 	userservicev1 "gin-starter/modules/user/v1/service"
 	"gin-starter/response"
@@ -173,5 +175,16 @@ func UserDeleterHTTPHandler(cfg config.Config, router *gin.Engine, ud userservic
 	{
 		v1.DELETE("/cms/admin/:id", hnd.DeleteAdmin)
 		v1.DELETE("/cms/role/:id", hnd.DeleteRole)
+	}
+}
+
+func PaymentFinderHTTPHandler(cfg config.Config, router *gin.Engine, pf paymentservicev1.PaymentFinderUseCase) {
+	hnd := paymenthandlerv1.NewPaymentFinderHandler(pf)
+	v1 := router.Group("/v1")
+
+	v1.Use(middleware.Auth(cfg))
+	{
+		v1.GET("/user/payment/list", hnd.GetPayments)
+		v1.GET("/user/payment/detail/:id", hnd.GetPaymentByID)
 	}
 }
