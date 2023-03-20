@@ -182,7 +182,7 @@ func PaymentFinderHTTPHandler(cfg config.Config, router *gin.Engine, pf payments
 	hnd := paymenthandlerv1.NewPaymentFinderHandler(pf)
 	v1 := router.Group("/v1")
 
-	v1.Use(middleware.Auth(cfg))
+	// v1.Use(middleware.Auth(cfg))
 	{
 		v1.GET("/user/payment/list", hnd.GetPayments)
 		v1.GET("/user/payment/detail/:id", hnd.GetPaymentByID)
